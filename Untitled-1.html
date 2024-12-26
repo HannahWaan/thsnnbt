@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background: #E195AB;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+.heart {
+  position: fixed;
+  font-size: 40px;
+  color: #CC2B52;
+  animation: float 6s linear infinite;
+  z-index: 1;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+#countdown {
+  font-size: 2rem;
+  color: #ff4757;
+  margin: 1rem 0;
+}
+
+h1 {
+  color: #2f3542;
+  margin-bottom: 1rem;
+}
+
+.time-block {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+.time-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.time-label {
+  font-size: 0.9rem;
+  color: #747d8c;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Time Together</h1>
+  <div id="countdown">
+    <div class="time-block">
+      <div class="time-value" id="days">0</div>
+      <div class="time-label">Days</div>
+    </div>
+    <div class="time-block">
+      <div class="time-value" id="hours">0</div>
+      <div class="time-label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div class="time-value" id="minutes">0</div>
+      <div class="time-label">Minutes</div>
+    </div>
+    <div class="time-block">
+      <div class="time-value" id="seconds">0</div>
+      <div class="time-label">Seconds</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const startDate = new Date('2022-02-09T00:00:00').getTime();
+
+function updateCounter() {
+  const now = new Date().getTime();
+  const timeDifference = now - startDate;
+
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+  document.getElementById('days').textContent = days;
+  document.getElementById('hours').textContent = hours;
+  document.getElementById('minutes').textContent = minutes;
+  document.getElementById('seconds').textContent = seconds;
+}
+
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.innerHTML = '♥';
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+  document.body.appendChild(heart);
+  
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 150);
+updateCounter();
+setInterval(updateCounter, 1000);
+</script>
+</body>
+</html>
